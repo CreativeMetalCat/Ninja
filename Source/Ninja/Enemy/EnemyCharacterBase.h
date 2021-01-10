@@ -16,4 +16,6 @@ class NINJA_API AEnemyCharacterBase : public ANinjaCharacterBase
 	public:
 	
 	virtual bool CanBeStealthKilled_Implementation()override;
+
+	virtual void Die_Implementation()override;
 };

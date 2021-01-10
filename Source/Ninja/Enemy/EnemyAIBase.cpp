@@ -5,11 +5,11 @@
 
 #include "BehaviorTree/BlackboardComponent.h"
 
-void AEnemyAIBase::UpdateAI(TArray<AActor*> PercivedActors)
+void AEnemyAIBase::UpdateAI(TArray<AActor*> PerceivedActors)
 {
-	if(PercivedActors.Num() > 0 && Blackboard)
+	if(PerceivedActors.Num() > 0 && Blackboard)
 	{
-		if(PercivedActors.Find(Target) != INDEX_NONE)
+		if(PerceivedActors.Find(Target) != INDEX_NONE)
 		{
 			LastTargetLocation = Target->GetActorLocation();				
 		}
@@ -17,17 +17,57 @@ void AEnemyAIBase::UpdateAI(TArray<AActor*> PercivedActors)
 		{
 			TargetLost();
 
-			for (int i = 0; i < PercivedActors.Num(); i++)
+			for (int i = 0; i < PerceivedActors.Num(); i++)
 			{
-				if(PercivedActors[i]->Tags.Find(EnemyTag) != INDEX_NONE)
+				if(PerceivedActors[i]->Tags.Find(EnemyTag) != INDEX_NONE)
 				{
-					Target = PercivedActors[i];
+					Target = PerceivedActors[i];
 					TargetFound();
 					break;
 				}
 			}
 		}
 	}
+}
+
+void AEnemyAIBase::SelectNextPatrolPoint()
+{
+	if(CurrentPatrolManager && Blackboard)
+	{
+		CurrentPatrolPointId++;
+		if(CurrentPatrolPointId > CurrentPatrolManager->GetCurrentNodes().Num() - 1)
+		{
+			CurrentPatrolPointId = 0;
+		}
+		Blackboard->SetValueAsObject(BlackboardPatrolNodeName,CurrentPatrolManager->GetCurrentNodes()[CurrentPatrolPointId]);
+	}
+	bIsWaitingOnPatrolPoint = false;
+}
+
+void AEnemyAIBase::OnReachedPatrolPoint_Implementation()
+{
+	if(!bIsWaitingOnPatrolPoint && CurrentPatrolManager)
+	{
+		bIsWaitingOnPatrolPoint = true;
+		//we check if current node id is valid(in case the node was deleted)
+		if(GetWorld() && CurrentPatrolManager->GetCurrentNodes().IsValidIndex(CurrentPatrolPointId))
+		{
+			if(CurrentPatrolManager->GetCurrentNodes()[CurrentPatrolPointId]->WaitingTime > 0)
+			{
+				//set timer for the next patrol point
+				GetWorldTimerManager().SetTimer(NextPatrolPointTimerHandle, this, &AEnemyAIBase::SelectNextPatrolPoint,
+                                                CurrentPatrolManager->GetCurrentNodes()[CurrentPatrolPointId]->WaitingTime, false);
+				return;
+			}
+		}		
+		//Node was deleted so we try to select new one
+		SelectNextPatrolPoint();
+	}
+}
+
+void AEnemyAIBase::SelectNewPatrolPoint_Implementation()
+{
+	SelectNextPatrolPoint();
 }
 
 void AEnemyAIBase::TargetFound_Implementation()

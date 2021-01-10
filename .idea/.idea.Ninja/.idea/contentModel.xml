@@ -50425,6 +50425,16 @@
       <e p="README.md" t="Include" />
       <e p="Source" t="Include">
         <e p="Ninja" t="Include">
+          <e p="AI" t="Include">
+            <e p="AIInterface.cpp" t="Include" />
+            <e p="AIInterface.h" t="Include" />
+            <e p="AIPatrolManagerBase.cpp" t="Include" />
+            <e p="AIPatrolManagerBase.h" t="Include" />
+            <e p="AIPatrolNodeBase.cpp" t="Include" />
+            <e p="AIPatrolNodeBase.h" t="Include" />
+            <e p="AIState.cpp" t="Include" />
+            <e p="AIState.h" t="Include" />
+          </e>
           <e p="Animation" t="Include">
             <e p="OverlayType.cpp" t="Include" />
             <e p="OverlayType.h" t="Include" />

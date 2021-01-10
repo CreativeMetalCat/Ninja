@@ -7,3 +7,9 @@ bool AEnemyCharacterBase::CanBeStealthKilled_Implementation()
 {
 	return !bDead;
 }
+
+void AEnemyCharacterBase::Die_Implementation()
+{
+	Super::Die();
+	GetController()->UnPossess();
+}

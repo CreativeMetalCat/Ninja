@@ -50430,6 +50430,8 @@
             <e p="OverlayType.h" t="Include" />
           </e>
           <e p="Enemy" t="Include">
+            <e p="EnemyAIBase.cpp" t="Include" />
+            <e p="EnemyAIBase.h" t="Include" />
             <e p="EnemyCharacterBase.cpp" t="Include" />
             <e p="EnemyCharacterBase.h" t="Include" />
           </e>

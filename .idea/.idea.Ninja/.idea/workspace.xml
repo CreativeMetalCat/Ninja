@@ -32,6 +32,8 @@
       <option value="$PROJECT_DIR$/Source/Ninja/NinjaCharacterBase.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyCharacterBase.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyCharacterBase.cpp" />
+      <option value="$PROJECT_DIR$/Source/Ninja/Weapon/WeaponAnimationType.cpp" />
+      <option value="$PROJECT_DIR$/Source/Ninja/Weapon/WeaponAnimationType.h" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mqxhMZggXVLqcwa6U1Bn96x9PL" />

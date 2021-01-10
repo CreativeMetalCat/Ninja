@@ -50452,6 +50452,10 @@
           <e p="NinjaCharacterBase.h" t="Include" />
           <e p="NinjaGameModeBase.cpp" t="Include" />
           <e p="NinjaGameModeBase.h" t="Include" />
+          <e p="Weapon" t="Include">
+            <e p="WeaponAnimationType.cpp" t="Include" />
+            <e p="WeaponAnimationType.h" t="Include" />
+          </e>
         </e>
         <e p="Ninja.Target.cs" t="Include" />
         <e p="NinjaEditor.Target.cs" t="Include" />

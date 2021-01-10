@@ -11,5 +11,8 @@ bool AEnemyCharacterBase::CanBeStealthKilled_Implementation()
 void AEnemyCharacterBase::Die_Implementation()
 {
 	Super::Die();
-	GetController()->UnPossess();
+	if(GetController())
+	{
+		GetController()->UnPossess();
+	}
 }

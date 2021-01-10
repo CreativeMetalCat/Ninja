@@ -50404,6 +50404,7 @@
       <e p="UE4Game.Target.cs" t="Include" />
     </e>
     <e p="C:\UnrealProjects\Ninja" t="IncludeFlat">
+      <e p=".gitignore" t="Include" />
       <e p="Config" t="Include">
         <e p="DefaultEditor.ini" t="Include" />
         <e p="DefaultEngine.ini" t="Include" />
@@ -50421,11 +50422,16 @@
       <e p="Ninja.sln" t="IncludeFlat" />
       <e p="Ninja.uproject" t="Include" />
       <e p="packages" t="ExcludeRecursive" />
+      <e p="README.md" t="Include" />
       <e p="Source" t="Include">
         <e p="Ninja" t="Include">
           <e p="Animation" t="Include">
             <e p="OverlayType.cpp" t="Include" />
             <e p="OverlayType.h" t="Include" />
+          </e>
+          <e p="Enemy" t="Include">
+            <e p="EnemyCharacterBase.cpp" t="Include" />
+            <e p="EnemyCharacterBase.h" t="Include" />
           </e>
           <e p="Ninja.Build.cs" t="Include" />
           <e p="Ninja.cpp" t="Include" />

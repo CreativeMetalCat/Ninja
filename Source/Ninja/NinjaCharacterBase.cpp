@@ -59,9 +59,55 @@ void ANinjaCharacterBase::SetIsTurning(float axisValue)
 	}
 	else
 	{
-		//we are moving so not turing
+		//we are moving so not turing in place
 		bIsTurningLeft = false;
 		bIsTurningRight = false;
 	}
+}
+
+FName ANinjaCharacterBase::GetAttackAnimation_Implementation()
+{
+	return TEXT("StabThrough");
+}
+
+bool ANinjaCharacterBase::CheckForAttack(TArray<AActor*> actors,ANinjaCharacterBase*&victim)
+{
+	victim = nullptr;
+	if(actors.Num() > 0)
+	{
+		for (int i = 0; i < actors.Num(); i++)
+		{
+			if(ANinjaCharacterBase*character = Cast<ANinjaCharacterBase>(actors[i]))
+			{
+				if(character->CanBeStealthKilled())
+				{
+					victim = character;
+					character->BeAttacked(this,GetAttackAnimation());
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+FTransform ANinjaCharacterBase::GetVictimTransform_Implementation()
+{
+	return FTransform();
+}
+
+void ANinjaCharacterBase::BeAttacked_Implementation(ANinjaCharacterBase*Attacker,FName AttackName)
+{
+	
+}
+
+bool ANinjaCharacterBase::CanBeStealthKilled_Implementation()
+{
+	return false;
+}
+
+void ANinjaCharacterBase::Die_Implementation()
+{
+	OnDeath.Broadcast(this);
 }
 

@@ -13,10 +13,12 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Source/Ninja/NinjaCharacterBase.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/Animation/OverlayType.cpp" />
-      <option value="$PROJECT_DIR$/Source/Ninja/NinjaCharacterBase.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/Animation/OverlayType.h" />
+      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyCharacterBase.h" />
+      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyCharacterBase.cpp" />
+      <option value="$PROJECT_DIR$/Source/Ninja/NinjaCharacterBase.h" />
+      <option value="$PROJECT_DIR$/Source/Ninja/NinjaCharacterBase.cpp" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mqxhMZggXVLqcwa6U1Bn96x9PL" />

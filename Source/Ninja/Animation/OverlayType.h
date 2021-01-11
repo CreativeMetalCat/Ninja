@@ -14,5 +14,5 @@ enum class EOverlayType : uint8
 {
 	EOT_Default UMETA(DisplayName = "Default"),
 	EOT_Sword UMETA(DisplayName = "Sword"),
-	EOT_Rifle UMETA(DisplayName = "Rifle")
+	EOT_Weapon UMETA(DisplayName = "Weapon")
 };

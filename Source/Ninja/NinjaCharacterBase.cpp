@@ -91,6 +91,15 @@ bool ANinjaCharacterBase::CheckForAttack(TArray<AActor*> actors,ANinjaCharacterB
 	return false;
 }
 
+void ANinjaCharacterBase::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const
+{
+	if(GetMesh()->SkeletalMesh)
+	{
+		OutLocation = GetMesh()->GetSocketLocation(HeadSocketName);
+		OutRotation = GetMesh()->GetSocketRotation(HeadSocketName);
+	}
+}
+
 FTransform ANinjaCharacterBase::GetVictimTransform_Implementation()
 {
 	return FTransform();
@@ -109,5 +118,56 @@ bool ANinjaCharacterBase::CanBeStealthKilled_Implementation()
 void ANinjaCharacterBase::Die_Implementation()
 {
 	OnDeath.Broadcast(this);
+}
+
+bool ANinjaCharacterBase::CanBeSeenFrom(const FVector& ObserverLocation, FVector& OutSeenLocation, int32& NumberOfLoSChecksPerformed, float& OutSightStrength, const AActor* IgnoreActor) const
+{
+	static const FName NAME_AILineOfSight = FName(TEXT("TestPawnLineOfSight"));
+
+	FHitResult HitResult;
+
+	FCollisionQueryParams params = FCollisionQueryParams();
+	params.AddIgnoredActor(IgnoreActor);
+
+	if(SocketsToTestForVisibility.Num() > 0)
+	{
+		//check each socket for visibility
+		for (int i = 0; i < SocketsToTestForVisibility.Num(); i++)
+		{
+			FVector socketLocation;
+		
+			if (GetMesh() != nullptr)
+			{
+				socketLocation = GetMesh()->GetSocketLocation(SocketsToTestForVisibility[i]);
+
+				const bool bHitSocket = GetWorld()->LineTraceSingleByChannel(HitResult, ObserverLocation, socketLocation, ECollisionChannel::ECC_Visibility, params);
+
+				NumberOfLoSChecksPerformed++;
+				
+				if (bHitSocket == false || (HitResult.Actor.IsValid() && HitResult.Actor->IsOwnedBy(this))) {
+					OutSeenLocation = socketLocation;
+					OutSightStrength = 1;
+
+					return true;
+				}
+			}
+		}
+
+	}
+	
+	//do default check to avoid invisible pawns
+	const bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, ObserverLocation, GetActorLocation(), ECollisionChannel::ECC_Visibility, params);
+			
+	if (bHit == false || (HitResult.Actor.IsValid() && HitResult.Actor->IsOwnedBy(this)))
+	{
+		OutSeenLocation = GetActorLocation();
+		OutSightStrength = 1;
+
+		return true;
+	}
+
+	OutSightStrength = 0;
+	
+	return false;
 }
 

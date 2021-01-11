@@ -77,6 +77,8 @@ void AEnemyAIBase::TargetFound_Implementation()
 		Blackboard->SetValueAsObject(BlackboardTargetName,Target);
 		
 		OnTargetFound.Broadcast(Target);
+
+		SetFocus(Target);
 	}
 }
 
@@ -87,6 +89,8 @@ void AEnemyAIBase::TargetLost_Implementation()
 		Blackboard->SetValueAsObject(BlackboardTargetName,nullptr);
 
 		OnTargetLost.Broadcast(LastTargetLocation);
+
+		ClearFocus(EAIFocusPriority::Gameplay);
 
 		Target = nullptr;
 	}

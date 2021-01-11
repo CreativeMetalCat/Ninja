@@ -6,6 +6,7 @@
 
 #include "Animation/OverlayType.h"
 #include "GameFramework/Character.h"
+#include "Perception/AISightTargetInterface.h"
 #include "NinjaCharacterBase.generated.h"
 
 
@@ -15,7 +16,7 @@ class ANinjaCharacterBase;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeathDelegate,ANinjaCharacterBase*,DeadPerson);
 
 UCLASS()
-class NINJA_API ANinjaCharacterBase : public ACharacter
+class NINJA_API ANinjaCharacterBase : public ACharacter, public IAISightTargetInterface
 {
 	GENERATED_BODY()
 
@@ -42,6 +43,15 @@ public:
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Life")
 	bool bDead = false;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Sight")
+	FName HeadSocketName = TEXT("HeadSocket");
+
+	/*If ai can see these sockets meas it can see the actor
+	 * Made because default ai system only checks for bottom of the actor(feet basicly)
+	 */
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Sight")
+	TArray<FName>SocketsToTestForVisibility;
 	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -71,4 +81,13 @@ public:
 	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Death)
 	void Die();
 
+	virtual void GetActorEyesViewPoint(FVector & OutLocation,FRotator & OutRotation) const override;
+
+	virtual bool CanBeSeenFrom(
+  const FVector& ObserverLocation,
+  FVector& OutSeenLocation,
+  int32& NumberOfLoSChecksPerformed,
+  float& OutSightStrength,
+  const AActor* IgnoreActor = NULL
+  ) const;
 };

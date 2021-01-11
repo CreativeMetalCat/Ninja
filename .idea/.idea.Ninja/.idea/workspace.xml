@@ -12,13 +12,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../../Program Files/Epic Games/UE_4.26/Engine/Source/Runtime/AIModule/Classes/AIController.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Program Files/Epic Games/UE_4.26/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Source/Ninja/Animation/OverlayType.cpp" />
-      <option value="$PROJECT_DIR$/Source/Ninja/Animation/OverlayType.h" />
-      <option value="$PROJECT_DIR$/Source/Ninja/NinjaCharacterBase.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/AI/AIPatrolNodeBase.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/AI/AIPatrolNodeBase.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/AI/AIPatrolManagerBase.h" />
@@ -26,14 +25,17 @@
       <option value="$PROJECT_DIR$/Source/Ninja/AI/AIState.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/AI/AIState.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/AI/AIInterface.cpp" />
-      <option value="$PROJECT_DIR$/Source/Ninja/AI/AIInterface.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyAIBase.h" />
-      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyAIBase.cpp" />
-      <option value="$PROJECT_DIR$/Source/Ninja/NinjaCharacterBase.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyCharacterBase.h" />
-      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyCharacterBase.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/Weapon/WeaponAnimationType.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/Weapon/WeaponAnimationType.h" />
+      <option value="$PROJECT_DIR$/Source/Ninja/Animation/OverlayType.h" />
+      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyAIBase.cpp" />
+      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyCharacterBase.cpp" />
+      <option value="$PROJECT_DIR$/Source/Ninja/Ninja.Build.cs" />
+      <option value="$PROJECT_DIR$/Source/Ninja/NinjaCharacterBase.cpp" />
+      <option value="$PROJECT_DIR$/Source/Ninja/AI/AIInterface.h" />
+      <option value="$PROJECT_DIR$/Source/Ninja/NinjaCharacterBase.h" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mqxhMZggXVLqcwa6U1Bn96x9PL" />

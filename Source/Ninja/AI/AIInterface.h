@@ -27,4 +27,10 @@ public:
 
 	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Patrolling)
 	void SelectNewPatrolPoint();
+
+	/* Returns location for ai to look at when focused on this actor
+	 * 
+	 */
+	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Targeting)
+	FVector GetMainTargetLocationOnBody();
 };

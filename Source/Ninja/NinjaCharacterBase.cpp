@@ -9,6 +9,8 @@ ANinjaCharacterBase::ANinjaCharacterBase()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	WeaponMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
+	WeaponMeshComponent->SetupAttachment(GetMesh(),"WeaponHolding");
 }
 
 // Called when the game starts or when spawned
@@ -89,6 +91,31 @@ bool ANinjaCharacterBase::CheckForAttack(TArray<AActor*> actors,ANinjaCharacterB
 		}
 	}
 	return false;
+}
+
+bool ANinjaCharacterBase::CanShoot_Implementation()
+{
+	return bCanShoot && Weapon;
+}
+
+void ANinjaCharacterBase::CreateWeapon_Implementation(FDataTableRowHandle WeaponInfo)
+{
+	if(!WeaponInfo.IsNull())
+	{
+		if(!Weapon)
+		{
+			Weapon = GetWorld()->SpawnActor<AWeaponBase>(AWeaponBase::StaticClass());
+			Weapon->AttachToActor(this,FAttachmentTransformRules::SnapToTargetIncludingScale);
+		}
+		
+		Weapon->InfoRowHandle = WeaponInfo;
+		Weapon->CurrentAmmo = 0;
+		if(Weapon->LoadWeaponData())
+		{
+			WeaponMeshComponent->SetSkeletalMesh(Weapon->Info.WeaponMesh);
+			CurrentOverlay = EOverlayType::EOT_Weapon;
+		}
+	}
 }
 
 void ANinjaCharacterBase::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const

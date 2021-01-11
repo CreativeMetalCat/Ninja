@@ -7,6 +7,8 @@
 #include "Animation/OverlayType.h"
 #include "GameFramework/Character.h"
 #include "Perception/AISightTargetInterface.h"
+#include "WeaponSystem/WeaponBase.h"
+
 #include "NinjaCharacterBase.generated.h"
 
 
@@ -31,6 +33,10 @@ protected:
 public:
 	UPROPERTY(BlueprintAssignable,Category=Death)
 	FOnDeathDelegate OnDeath;
+
+	UPROPERTY(BlueprintReadWrite,EditDefaultsOnly,Category=Weapon)
+	USkeletalMeshComponent*WeaponMeshComponent;
+	
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Animation|Turning")
 	bool bIsTurningLeft = false;
@@ -52,6 +58,13 @@ public:
 	 */
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Sight")
 	TArray<FName>SocketsToTestForVisibility;
+
+	/*This actor manages weapon actions based on info provided*/
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = Weapon)
+	AWeaponBase* Weapon;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = Weapon)
+	bool bCanShoot = true;
 	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -78,16 +91,22 @@ public:
 	UFUNCTION(BlueprintCallable,Category=Attack)
 	virtual bool CheckForAttack(TArray<AActor*>actors,ANinjaCharacterBase*&victim);
 	
+	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Weapon)
+	void CreateWeapon(FDataTableRowHandle WeaponInfo);
+
+	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Weapon)
+	bool CanShoot();
+
 	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Death)
 	void Die();
 
 	virtual void GetActorEyesViewPoint(FVector & OutLocation,FRotator & OutRotation) const override;
 
 	virtual bool CanBeSeenFrom(
-  const FVector& ObserverLocation,
-  FVector& OutSeenLocation,
-  int32& NumberOfLoSChecksPerformed,
-  float& OutSightStrength,
-  const AActor* IgnoreActor = NULL
-  ) const;
+		const FVector& ObserverLocation,
+		FVector& OutSeenLocation,
+		int32& NumberOfLoSChecksPerformed,
+		float& OutSightStrength,
+		const AActor* IgnoreActor = NULL
+	) const;
 };

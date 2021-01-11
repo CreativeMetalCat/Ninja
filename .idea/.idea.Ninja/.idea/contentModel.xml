@@ -50456,6 +50456,20 @@
             <e p="WeaponAnimationType.cpp" t="Include" />
             <e p="WeaponAnimationType.h" t="Include" />
           </e>
+          <e p="WeaponSystem" t="Include">
+            <e p="BulletBase.cpp" t="Include" />
+            <e p="BulletBase.h" t="Include" />
+            <e p="Components" t="Include">
+              <e p="ProjectileShootingComponent.cpp" t="Include" />
+              <e p="ProjectileShootingComponent.h" t="Include" />
+            </e>
+            <e p="WeaponBase.cpp" t="Include" />
+            <e p="WeaponBase.h" t="Include" />
+            <e p="WeaponFireComponent.cpp" t="Include" />
+            <e p="WeaponFireComponent.h" t="Include" />
+            <e p="WeaponInfo.cpp" t="Include" />
+            <e p="WeaponInfo.h" t="Include" />
+          </e>
         </e>
         <e p="Ninja.Target.cs" t="Include" />
         <e p="NinjaEditor.Target.cs" t="Include" />

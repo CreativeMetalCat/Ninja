@@ -95,7 +95,7 @@ bool ANinjaCharacterBase::CheckForAttack(TArray<AActor*> actors,ANinjaCharacterB
 
 bool ANinjaCharacterBase::CanShoot_Implementation()
 {
-	return bCanShoot && Weapon;
+	return bCanShoot && Weapon && !bDead;
 }
 
 void ANinjaCharacterBase::CreateWeapon_Implementation(FDataTableRowHandle WeaponInfo)

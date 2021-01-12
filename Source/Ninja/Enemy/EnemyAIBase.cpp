@@ -15,17 +15,18 @@ void AEnemyAIBase::UpdateAI(TArray<AActor*> PerceivedActors)
 		}
 		else
 		{
-			TargetLost();
-
 			for (int i = 0; i < PerceivedActors.Num(); i++)
 			{
 				if(PerceivedActors[i]->Tags.Find(EnemyTag) != INDEX_NONE)
 				{
 					Target = PerceivedActors[i];
 					TargetFound();
-					break;
+					return;
 				}
 			}
+			
+			TargetLost();
+
 		}
 	}
 }
@@ -86,7 +87,7 @@ void AEnemyAIBase::TargetLost_Implementation()
 {
 	if(Target)
 	{
-		Blackboard->SetValueAsObject(BlackboardTargetName,nullptr);
+		Blackboard->ClearValue(BlackboardTargetName);
 
 		OnTargetLost.Broadcast(LastTargetLocation);
 

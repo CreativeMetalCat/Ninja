@@ -50,6 +50,9 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Life")
 	bool bDead = false;
 
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Life")
+	float Health = 100.f;
+
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Sight")
 	FName HeadSocketName = TEXT("HeadSocket");
 

@@ -144,7 +144,11 @@ bool ANinjaCharacterBase::CanBeStealthKilled_Implementation()
 
 void ANinjaCharacterBase::Die_Implementation()
 {
-	OnDeath.Broadcast(this);
+	if(!bDead)
+	{
+		OnDeath.Broadcast(this);
+		bDead = true;
+	}
 }
 
 bool ANinjaCharacterBase::CanBeSeenFrom(const FVector& ObserverLocation, FVector& OutSeenLocation, int32& NumberOfLoSChecksPerformed, float& OutSightStrength, const AActor* IgnoreActor) const

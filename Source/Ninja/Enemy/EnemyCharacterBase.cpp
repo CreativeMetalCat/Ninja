@@ -10,8 +10,16 @@ bool AEnemyCharacterBase::CanBeStealthKilled_Implementation()
 
 void AEnemyCharacterBase::Die_Implementation()
 {
-	if(GetController())
+	if(!bDead)
 	{
-		GetController()->UnPossess();
+		OnDeath.Broadcast(this);
+		bDead = true;
+	
+		if(GetController())
+		{
+			auto Contr = GetController();
+			GetController()->UnPossess();
+			Contr->Destroy();
+		}
 	}
 }

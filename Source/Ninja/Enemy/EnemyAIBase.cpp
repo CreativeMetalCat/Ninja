@@ -29,6 +29,10 @@ void AEnemyAIBase::UpdateAI(TArray<AActor*> PerceivedActors)
 
 		}
 	}
+	else if(Blackboard)
+	{
+		TargetLost();
+	}
 }
 
 void AEnemyAIBase::SelectNextPatrolPoint()

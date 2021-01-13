@@ -57,6 +57,9 @@ class NINJA_API AEnemyAIBase : public AAIController,public IAIInterface
 	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category=Search)
 	bool bEverEndsSearch = false;
 
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category=Search)
+	bool bIsCurrentlySearching = false;
+
 	/*Used to avoid duplicate calls*/
 	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category=Patrolling)
 	bool bIsWaitingOnPatrolPoint = false;
@@ -86,7 +89,7 @@ class NINJA_API AEnemyAIBase : public AAIController,public IAIInterface
 	void UpdateAI(TArray<AActor*>PerceivedActors);
 
 	UFUNCTION(BlueprintCallable,Category = Search)
-	void EndSeach();	
+	void EndSearch();	
 
 	UFUNCTION(BlueprintCallable)
 	virtual void SelectNextPatrolPoint();
@@ -106,4 +109,8 @@ class NINJA_API AEnemyAIBase : public AAIController,public IAIInterface
 	virtual void ForceSetTarget_Implementation(AActor*newTarget)override;
 
 	virtual void StartMeleeFight_Implementation(AActor*newTarget)override;
+
+	virtual void UpdateAIState_Implementation(EAIState newState) override;
+
+	virtual bool IsWaitingOnPatrolPoint_Implementation()override{return bIsWaitingOnPatrolPoint;}
 };

@@ -39,12 +39,17 @@ void AEnemyAIBase::UpdateAI(TArray<AActor*> PerceivedActors)
 	}
 }
 
-void AEnemyAIBase::EndSeach()
+void AEnemyAIBase::EndSearch()
 {
 	if(Cast<IAIInterface>(GetPawn()) || GetPawn()->Implements<UAIInterface>())
 	{
 		IAIInterface::Execute_UpdateAIState(GetPawn(),EAIState::EAS_Searching);
 	}
+	OnFinishedSearch.Broadcast();
+
+	Blackboard->ClearValue(BlackboardLastKnownLocationName);
+
+	bIsCurrentlySearching = false;
 }
 
 void AEnemyAIBase::SelectNextPatrolPoint()
@@ -57,6 +62,11 @@ void AEnemyAIBase::SelectNextPatrolPoint()
 			CurrentPatrolPointId = 0;
 		}
 		Blackboard->SetValueAsObject(BlackboardPatrolNodeName,CurrentPatrolManager->GetCurrentNodes()[CurrentPatrolPointId]);
+
+		if(Cast<IAIInterface>(GetPawn()) || GetPawn()->Implements<UAIInterface>())
+		{
+			IAIInterface::Execute_SelectNewPatrolPoint(GetPawn());
+		}
 	}
 	bIsWaitingOnPatrolPoint = false;
 }
@@ -89,9 +99,11 @@ void AEnemyAIBase::SelectNewPatrolPoint_Implementation()
 
 void AEnemyAIBase::OnReachedLastKnownLocation_Implementation()
 {
-	OnFinishedSearch.Broadcast();
-
-	Blackboard->ClearValue(BlackboardLastKnownLocationName);
+	if(!bIsCurrentlySearching)
+	{
+		bIsCurrentlySearching = true;
+		GetWorldTimerManager().SetTimer(SearchEndTimerHandle,this,&AEnemyAIBase::EndSearch,SearchTime);
+	}
 }
 
 void AEnemyAIBase::ForceSetTarget_Implementation(AActor* newTarget)
@@ -140,6 +152,19 @@ void AEnemyAIBase::StartMeleeFight_Implementation(AActor* newTarget)
 	}
 }
 
+void AEnemyAIBase::UpdateAIState_Implementation(EAIState newState)
+{
+	if(State!= newState)
+	{
+		State = newState;
+
+		if(Cast<IAIInterface>(GetPawn()) || GetPawn()->Implements<UAIInterface>())
+		{
+			IAIInterface::Execute_UpdateAIState(GetPawn(),newState);
+		}
+	}
+}
+
 void AEnemyAIBase::TargetFound_Implementation()
 {
 	if(Target)
@@ -185,7 +210,7 @@ void AEnemyAIBase::TargetLost_Implementation()
 		
 		if(bEverEndsSearch)
 		{
-			GetWorldTimerManager().SetTimer(SearchEndTimerHandle,this,&AEnemyAIBase::EndSeach,SearchTime);
+			GetWorldTimerManager().SetTimer(SearchEndTimerHandle,this,&AEnemyAIBase::EndSearch,SearchTime);
 		}
 	}
 }

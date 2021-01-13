@@ -30,6 +30,9 @@ public:
 	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Patrolling)
 	void SelectNewPatrolPoint();
 
+	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Patrolling)
+	bool IsWaitingOnPatrolPoint();
+
 	/* Returns location for ai to look at when focused on this actor
 	 * 
 	 */
@@ -48,4 +51,7 @@ public:
 
 	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Search)
 	void OnReachedLastKnownLocation();
+
+	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Noise)
+	void MakeFootstepNoise();
 };

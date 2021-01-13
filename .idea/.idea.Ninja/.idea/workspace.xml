@@ -40,12 +40,12 @@
       <option value="$PROJECT_DIR$/Source/Ninja/NinjaCharacterBase.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyCharacterBase.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyCharacterBase.cpp" />
-      <option value="$PROJECT_DIR$/Source/Ninja/AI/AIInterface.h" />
-      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyAIBase.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/AI/AIState.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/Animation/OverlayType.h" />
-      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyAIBase.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/NinjaCharacterBase.h" />
+      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyAIBase.h" />
+      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyAIBase.cpp" />
+      <option value="$PROJECT_DIR$/Source/Ninja/AI/AIInterface.h" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mqxhMZggXVLqcwa6U1Bn96x9PL" />

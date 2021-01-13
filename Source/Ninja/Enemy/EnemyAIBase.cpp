@@ -4,6 +4,12 @@
 #include "Ninja/Enemy/EnemyAIBase.h"
 
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Perception/AIPerceptionComponent.h"
+
+float AEnemyAIBase::GetMinFootstepLoudness()
+{
+	return (State == EAIState::EAS_Calm)? MinLoudnessToCareAboutWhenCalm: MinLoudnessToCareAboutWhenNotCalm;
+}
 
 void AEnemyAIBase::UpdateAI(TArray<AActor*> PerceivedActors)
 {
@@ -39,6 +45,30 @@ void AEnemyAIBase::UpdateAI(TArray<AActor*> PerceivedActors)
 	}
 }
 
+void AEnemyAIBase::UpdateHeardActors(TArray<AActor*> PerceivedActors)
+{
+	if(!Target && PerceivedActors.Num() > 0 && GetCorrectPerceptionComponent())
+	{
+		//the hearing is very simple
+		//once first noise that fits the idea found - it's the one used
+		for (int i = 0; i < PerceivedActors.Num(); i++)
+		{
+			const FActorPerceptionInfo * info = GetCorrectPerceptionComponent()->GetActorInfo(*PerceivedActors[i]);
+			if(info)
+			{
+				if(info->LastSensedStimuli.Num() > 0)
+				{
+					if (info->LastSensedStimuli[info->LastSensedStimuli.Num() - 1].Strength > GetMinFootstepLoudness())
+					{
+						SoundHeard(info->LastSensedStimuli[info->LastSensedStimuli.Num() - 1].StimulusLocation);
+						return;
+					}
+				}
+			}
+		}
+	}
+}
+
 void AEnemyAIBase::EndSearch()
 {
 	if(Cast<IAIInterface>(GetPawn()) || GetPawn()->Implements<UAIInterface>())
@@ -69,6 +99,28 @@ void AEnemyAIBase::SelectNextPatrolPoint()
 		}
 	}
 	bIsWaitingOnPatrolPoint = false;
+}
+
+UAIPerceptionComponent* AEnemyAIBase::GetCorrectPerceptionComponent_Implementation()
+{
+	return nullptr;
+}
+
+void AEnemyAIBase::SoundHeard_Implementation(FVector location)
+{
+	OnSoundHeard.Broadcast(location);
+	
+	Blackboard->SetValueAsVector(BlackboardLastKnownLocationName,location);
+
+	if(State != EAIState::EAS_Searching )
+	{
+		if(Cast<IAIInterface>(GetPawn()) || GetPawn()->Implements<UAIInterface>())
+		{
+			IAIInterface::Execute_UpdateAIState(GetPawn(),EAIState::EAS_Searching);
+		}
+
+		State = EAIState::EAS_Searching;
+	}
 }
 
 void AEnemyAIBase::OnReachedPatrolPoint_Implementation()

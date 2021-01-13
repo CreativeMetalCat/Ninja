@@ -17,6 +17,8 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTargetLostDelegate,FVector,LastKn
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTargetFoundDelegate,AActor*,Target);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSoundHeardDelegate,FVector,SoundLocation);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFinishedSearchDelegate);
 
 /**
@@ -32,6 +34,9 @@ class NINJA_API AEnemyAIBase : public AAIController,public IAIInterface
 	FTimerHandle NextPatrolPointTimerHandle;
 
 	FTimerHandle SearchEndTimerHandle;
+
+	float GetMinFootstepLoudness();
+	
 	public:
 
 	UPROPERTY(BlueprintAssignable)
@@ -44,6 +49,9 @@ class NINJA_API AEnemyAIBase : public AAIController,public IAIInterface
 	/*When reached last known location*/
 	UPROPERTY(BlueprintAssignable)
 	FFinishedSearchDelegate OnFinishedSearch;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnSoundHeardDelegate OnSoundHeard;
 
 	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category=State)
 	EAIState State = EAIState::EAS_Calm;
@@ -84,9 +92,18 @@ class NINJA_API AEnemyAIBase : public AAIController,public IAIInterface
 	
 	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category=Blackboard)
 	FName BlackboardLastKnownLocationName = TEXT("LastKnownLocation");
+
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category="Perception|Hearing")
+	float MinLoudnessToCareAboutWhenCalm = 0.8f;
+
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category="Perception|Hearing")
+	float MinLoudnessToCareAboutWhenNotCalm = 0.5f;
 	
 	UFUNCTION(BlueprintCallable)
 	void UpdateAI(TArray<AActor*>PerceivedActors);
+
+	UFUNCTION(BlueprintCallable)
+    void UpdateHeardActors(TArray<AActor*>PerceivedActors);
 
 	UFUNCTION(BlueprintCallable,Category = Search)
 	void EndSearch();	
@@ -100,6 +117,15 @@ class NINJA_API AEnemyAIBase : public AAIController,public IAIInterface
 	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Target)
     void TargetFound();
 
+	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Target)
+	void SoundHeard(FVector location);
+	
+	/*THIS FUNCTION MUST BE OVERRIDEN IN CHILD BPs
+	 * Get current ai perception component
+	 */
+	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Perception)
+	UAIPerceptionComponent*GetCorrectPerceptionComponent();
+	
 	virtual void OnReachedPatrolPoint_Implementation()override;
 
 	virtual  void SelectNewPatrolPoint_Implementation()override;

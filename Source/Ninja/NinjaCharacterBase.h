@@ -62,6 +62,9 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Sight")
 	TArray<FName>SocketsToTestForVisibility;
 
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Combat")
+	bool bIsBlocking = false;
+
 	/*This actor manages weapon actions based on info provided*/
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = Weapon)
 	AWeaponBase* Weapon;

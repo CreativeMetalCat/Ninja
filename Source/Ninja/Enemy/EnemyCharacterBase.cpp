@@ -3,6 +3,24 @@
 
 #include "Ninja/Enemy/EnemyCharacterBase.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
+
+void AEnemyCharacterBase::UpdateAIState_Implementation(EAIState newState)
+{
+	TArray<EAIState>States;
+	MovementSpeed.GetKeys(States);
+	int id = States.Find(newState);
+	if(id != INDEX_NONE)
+	{
+		if(UCharacterMovementComponent*comp = Cast<UCharacterMovementComponent>(GetMovementComponent()))
+		{
+			TArray<float>speeds;
+			MovementSpeed.GenerateValueArray(speeds);
+			comp->MaxWalkSpeed = speeds[id];
+		}
+	}
+}
+
 bool AEnemyCharacterBase::CanBeStealthKilled_Implementation()
 {
 	return !bDead;

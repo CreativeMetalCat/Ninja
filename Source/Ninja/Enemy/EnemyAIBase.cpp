@@ -7,31 +7,43 @@
 
 void AEnemyAIBase::UpdateAI(TArray<AActor*> PerceivedActors)
 {
-	if(PerceivedActors.Num() > 0 && Blackboard)
+	//we don't want to accidentally loose sight of target because of ai spinning too fast
+	if(State != EAIState::EAS_InMeleeCombat)
 	{
-		if(PerceivedActors.Find(Target) != INDEX_NONE)
+		if(PerceivedActors.Num() > 0 && Blackboard)
 		{
-			LastTargetLocation = Target->GetActorLocation();				
-		}
-		else
-		{
-			for (int i = 0; i < PerceivedActors.Num(); i++)
+			if(PerceivedActors.Find(Target) != INDEX_NONE)
 			{
-				if(PerceivedActors[i]->Tags.Find(EnemyTag) != INDEX_NONE)
-				{
-					Target = PerceivedActors[i];
-					TargetFound();
-					return;
-				}
+				LastTargetLocation = Target->GetActorLocation();				
 			}
+			else
+			{
+				for (int i = 0; i < PerceivedActors.Num(); i++)
+				{
+					if(PerceivedActors[i]->Tags.Find(EnemyTag) != INDEX_NONE)
+					{
+						Target = PerceivedActors[i];
+						TargetFound();
+						return;
+					}
+				}
 			
-			TargetLost();
+				TargetLost();
 
+			}
+		}
+		else if(Blackboard)
+		{
+			TargetLost();
 		}
 	}
-	else if(Blackboard)
+}
+
+void AEnemyAIBase::EndSeach()
+{
+	if(Cast<IAIInterface>(GetPawn()) || GetPawn()->Implements<UAIInterface>())
 	{
-		TargetLost();
+		IAIInterface::Execute_UpdateAIState(GetPawn(),EAIState::EAS_Searching);
 	}
 }
 
@@ -75,15 +87,77 @@ void AEnemyAIBase::SelectNewPatrolPoint_Implementation()
 	SelectNextPatrolPoint();
 }
 
-void AEnemyAIBase::TargetFound_Implementation()
+void AEnemyAIBase::OnReachedLastKnownLocation_Implementation()
 {
-	if(Target)
+	OnFinishedSearch.Broadcast();
+
+	Blackboard->ClearValue(BlackboardLastKnownLocationName);
+}
+
+void AEnemyAIBase::ForceSetTarget_Implementation(AActor* newTarget)
+{
+	if(newTarget && newTarget != Target)
 	{
+		Target = newTarget;
+		
+		if(SearchEndTimerHandle.IsValid()){SearchEndTimerHandle.Invalidate();}
+		
 		Blackboard->SetValueAsObject(BlackboardTargetName,Target);
 		
 		OnTargetFound.Broadcast(Target);
 
 		SetFocus(Target);
+
+		if(Cast<IAIInterface>(GetPawn()) || GetPawn()->Implements<UAIInterface>())
+		{
+			IAIInterface::Execute_UpdateAIState(GetPawn(),EAIState::EAS_InCombat);
+		}
+		
+		State = EAIState::EAS_InCombat;
+	}
+}
+
+void AEnemyAIBase::StartMeleeFight_Implementation(AActor* newTarget)
+{
+	if(newTarget && newTarget != Target)
+	{
+		Target = newTarget;
+		
+		if(SearchEndTimerHandle.IsValid()){SearchEndTimerHandle.Invalidate();}
+		
+		Blackboard->SetValueAsObject(BlackboardTargetName,Target);
+		
+		OnTargetFound.Broadcast(Target);
+
+		SetFocus(Target);
+
+		if(Cast<IAIInterface>(GetPawn()) || GetPawn()->Implements<UAIInterface>())
+		{
+			IAIInterface::Execute_UpdateAIState(GetPawn(),EAIState::EAS_InMeleeCombat);
+		}
+		
+		State = EAIState::EAS_InMeleeCombat;
+	}
+}
+
+void AEnemyAIBase::TargetFound_Implementation()
+{
+	if(Target)
+	{
+		if(SearchEndTimerHandle.IsValid()){SearchEndTimerHandle.Invalidate();}
+		
+		Blackboard->SetValueAsObject(BlackboardTargetName,Target);
+		
+		OnTargetFound.Broadcast(Target);
+
+		SetFocus(Target);
+
+		if(Cast<IAIInterface>(GetPawn()) || GetPawn()->Implements<UAIInterface>())
+		{
+			IAIInterface::Execute_UpdateAIState(GetPawn(),EAIState::EAS_InCombat);
+		}
+		
+		State = EAIState::EAS_InCombat;
 	}
 }
 
@@ -95,8 +169,23 @@ void AEnemyAIBase::TargetLost_Implementation()
 
 		OnTargetLost.Broadcast(LastTargetLocation);
 
+		Blackboard->SetValueAsVector(BlackboardLastKnownLocationName,LastTargetLocation);
+
 		ClearFocus(EAIFocusPriority::Gameplay);
 
 		Target = nullptr;
+	
+
+		if(Cast<IAIInterface>(GetPawn()) || GetPawn()->Implements<UAIInterface>())
+		{
+			IAIInterface::Execute_UpdateAIState(GetPawn(),EAIState::EAS_Searching);
+		}
+
+		State = EAIState::EAS_Searching;
+		
+		if(bEverEndsSearch)
+		{
+			GetWorldTimerManager().SetTimer(SearchEndTimerHandle,this,&AEnemyAIBase::EndSeach,SearchTime);
+		}
 	}
 }

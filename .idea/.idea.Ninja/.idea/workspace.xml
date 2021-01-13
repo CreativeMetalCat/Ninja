@@ -23,15 +23,10 @@
       <option value="$PROJECT_DIR$/Source/Ninja/AI/AIPatrolManagerBase.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/AI/AIPatrolManagerBase.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/AI/AIState.cpp" />
-      <option value="$PROJECT_DIR$/Source/Ninja/AI/AIState.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/AI/AIInterface.cpp" />
-      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyAIBase.h" />
-      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyCharacterBase.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/Weapon/WeaponAnimationType.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/Weapon/WeaponAnimationType.h" />
-      <option value="$PROJECT_DIR$/Source/Ninja/Animation/OverlayType.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/Ninja.Build.cs" />
-      <option value="$PROJECT_DIR$/Source/Ninja/AI/AIInterface.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/WeaponSystem/WeaponInfo.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/WeaponSystem/WeaponFireComponent.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/WeaponSystem/BulletBase.h" />
@@ -42,9 +37,14 @@
       <option value="$PROJECT_DIR$/Source/Ninja/WeaponSystem/WeaponBase.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/WeaponSystem/WeaponBase.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/WeaponSystem/Components/ProjectileShootingComponent.cpp" />
-      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyAIBase.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/NinjaCharacterBase.cpp" />
+      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyCharacterBase.h" />
       <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyCharacterBase.cpp" />
+      <option value="$PROJECT_DIR$/Source/Ninja/AI/AIInterface.h" />
+      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyAIBase.h" />
+      <option value="$PROJECT_DIR$/Source/Ninja/AI/AIState.h" />
+      <option value="$PROJECT_DIR$/Source/Ninja/Animation/OverlayType.h" />
+      <option value="$PROJECT_DIR$/Source/Ninja/Enemy/EnemyAIBase.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/NinjaCharacterBase.h" />
     </changedPaths>
   </component>

@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
+#include "AIState.h"
 #include "UObject/Interface.h"
 #include "AIInterface.generated.h"
 
@@ -33,4 +35,17 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Targeting)
 	FVector GetMainTargetLocationOnBody();
+
+	/*Use to quickly override current target*/
+	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Targeting)
+	void ForceSetTarget(AActor*newTarget);
+
+	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Targeting)
+    void StartMeleeFight(AActor*newTarget);
+
+	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Movement)
+	void UpdateAIState(EAIState newState);
+
+	UFUNCTION(BlueprintCallable,BlueprintNativeEvent,Category=Search)
+	void OnReachedLastKnownLocation();
 };

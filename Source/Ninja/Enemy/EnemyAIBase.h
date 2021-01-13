@@ -16,6 +16,9 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTargetLostDelegate,FVector,LastKn
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTargetFoundDelegate,AActor*,Target);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFinishedSearchDelegate);
+
 /**
  * 
  */
@@ -27,6 +30,8 @@ class NINJA_API AEnemyAIBase : public AAIController,public IAIInterface
 	FVector LastTargetLocation;
 
 	FTimerHandle NextPatrolPointTimerHandle;
+
+	FTimerHandle SearchEndTimerHandle;
 	public:
 
 	UPROPERTY(BlueprintAssignable)
@@ -36,8 +41,21 @@ class NINJA_API AEnemyAIBase : public AAIController,public IAIInterface
 	UPROPERTY(BlueprintAssignable)
 	FOnTargetFoundDelegate OnTargetFound;
 
+	/*When reached last known location*/
+	UPROPERTY(BlueprintAssignable)
+	FFinishedSearchDelegate OnFinishedSearch;
+
 	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category=State)
 	EAIState State = EAIState::EAS_Calm;
+
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category=Search)
+	float SearchTime = 10.f;
+
+	/*If true - when search time is up it will go to Calm state
+	 * If false - it will never be Calm after first sight
+	 */
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category=Search)
+	bool bEverEndsSearch = false;
 
 	/*Used to avoid duplicate calls*/
 	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category=Patrolling)
@@ -61,8 +79,14 @@ class NINJA_API AEnemyAIBase : public AAIController,public IAIInterface
 	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category=Blackboard)
 	FName BlackboardPatrolNodeName = TEXT("CurrentPatrolNode");
 	
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category=Blackboard)
+	FName BlackboardLastKnownLocationName = TEXT("LastKnownLocation");
+	
 	UFUNCTION(BlueprintCallable)
 	void UpdateAI(TArray<AActor*>PerceivedActors);
+
+	UFUNCTION(BlueprintCallable,Category = Search)
+	void EndSeach();	
 
 	UFUNCTION(BlueprintCallable)
 	virtual void SelectNextPatrolPoint();
@@ -76,4 +100,10 @@ class NINJA_API AEnemyAIBase : public AAIController,public IAIInterface
 	virtual void OnReachedPatrolPoint_Implementation()override;
 
 	virtual  void SelectNewPatrolPoint_Implementation()override;
+
+	virtual void OnReachedLastKnownLocation_Implementation()override;
+
+	virtual void ForceSetTarget_Implementation(AActor*newTarget)override;
+
+	virtual void StartMeleeFight_Implementation(AActor*newTarget)override;
 };

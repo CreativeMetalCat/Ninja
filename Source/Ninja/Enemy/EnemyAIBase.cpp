@@ -79,6 +79,8 @@ void AEnemyAIBase::EndSearch()
 
 	Blackboard->ClearValue(BlackboardLastKnownLocationName);
 
+	Blackboard->SetValueAsBool(BlackboardIsWaitingName ,false);
+	
 	bIsCurrentlySearching = false;
 }
 
@@ -99,6 +101,8 @@ void AEnemyAIBase::SelectNextPatrolPoint()
 		}
 	}
 	bIsWaitingOnPatrolPoint = false;
+	
+	Blackboard->SetValueAsBool(BlackboardIsWaitingName ,false);
 }
 
 UAIPerceptionComponent* AEnemyAIBase::GetCorrectPerceptionComponent_Implementation()
@@ -128,6 +132,9 @@ void AEnemyAIBase::OnReachedPatrolPoint_Implementation()
 	if(!bIsWaitingOnPatrolPoint && CurrentPatrolManager)
 	{
 		bIsWaitingOnPatrolPoint = true;
+		
+		Blackboard->SetValueAsBool(BlackboardIsWaitingName ,true);
+		
 		//we check if current node id is valid(in case the node was deleted)
 		if(GetWorld() && CurrentPatrolManager->GetCurrentNodes().IsValidIndex(CurrentPatrolPointId))
 		{
@@ -154,6 +161,9 @@ void AEnemyAIBase::OnReachedLastKnownLocation_Implementation()
 	if(!bIsCurrentlySearching)
 	{
 		bIsCurrentlySearching = true;
+
+		Blackboard->SetValueAsBool(BlackboardIsWaitingName ,true);
+		
 		GetWorldTimerManager().SetTimer(SearchEndTimerHandle,this,&AEnemyAIBase::EndSearch,SearchTime);
 	}
 }

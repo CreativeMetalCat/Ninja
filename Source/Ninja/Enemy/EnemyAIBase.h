@@ -93,6 +93,9 @@ class NINJA_API AEnemyAIBase : public AAIController,public IAIInterface
 	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category=Blackboard)
 	FName BlackboardLastKnownLocationName = TEXT("LastKnownLocation");
 
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category=Blackboard)
+	FName BlackboardIsWaitingName = TEXT("IsWaiting");
+
 	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category="Perception|Hearing")
 	float MinLoudnessToCareAboutWhenCalm = 0.8f;
 

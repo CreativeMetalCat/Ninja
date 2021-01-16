@@ -27,10 +27,6 @@ void UProjectileShootingComponent::Fire_Implementation(FVector location, FRotato
 				{
 					bullet->SphereCollisionComponent->IgnoreActorWhenMoving(WeaponOwner,true);		
 				}
-				else
-				{
-					GEngine->AddOnScreenDebugMessage(-1,1.f,FColor::Red,AActor::GetDebugName(WeaponOwner));
-				}
 			}
 		}
 	}

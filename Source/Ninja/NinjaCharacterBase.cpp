@@ -107,7 +107,7 @@ void ANinjaCharacterBase::CreateWeapon_Implementation(FDataTableRowHandle Weapon
 			Weapon = GetWorld()->SpawnActor<AWeaponBase>(AWeaponBase::StaticClass());
 			Weapon->AttachToActor(this,FAttachmentTransformRules::SnapToTargetIncludingScale);
 		}
-		
+		Weapon->SetOwner(this);
 		Weapon->InfoRowHandle = WeaponInfo;
 		Weapon->CurrentAmmo = 0;
 		if(Weapon->LoadWeaponData())

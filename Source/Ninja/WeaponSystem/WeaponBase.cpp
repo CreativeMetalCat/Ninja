@@ -30,11 +30,9 @@ bool AWeaponBase::LoadWeaponData()
 			{
 				if(FireComponent){FireComponent->DestroyComponent();}
 				FireComponent = NewObject<UWeaponFireComponent>(this,Info.WeaponFireComponent,TEXT("FireComponent"));
-				FireComponent->RegisterComponent();			
-			}
-			
-				
-			
+				FireComponent->RegisterComponent();
+				FireComponent->WeaponOwner = GetOwner();
+			}		
 			return true;
 		}
 	}

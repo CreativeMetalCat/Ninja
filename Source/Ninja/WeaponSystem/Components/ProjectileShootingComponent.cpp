@@ -20,12 +20,17 @@ void UProjectileShootingComponent::Fire_Implementation(FVector location, FRotato
 			for (int i = 0; i < OwningWeapon->Info.BulletsPerShot; i++)
 			{
 				Result = FMath::VRandCone(UKismetMathLibrary::GetForwardVector(rotation),FMath::DegreesToRadians(Spread))*200.f;
-				GetWorld()->SpawnActor<ABulletBase>(BulletClass, location,
-				                                    // UKismetMathLibrary::FindLookAtRotation(
-				                                    // 	location,
-				                                    // 	Result)
-														rotation
-				                                    	)->SetOwner(OwningWeapon->GetOwner());
+				FActorSpawnParameters params;
+				params.Owner = WeaponOwner;
+				params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+				if(ABulletBase * bullet  = GetWorld()->SpawnActor<ABulletBase>(BulletClass, location,rotation))
+				{
+					bullet->SphereCollisionComponent->IgnoreActorWhenMoving(WeaponOwner,true);		
+				}
+				else
+				{
+					GEngine->AddOnScreenDebugMessage(-1,1.f,FColor::Red,AActor::GetDebugName(WeaponOwner));
+				}
 			}
 		}
 	}

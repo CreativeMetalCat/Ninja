@@ -47,6 +47,7 @@
       <option value="$PROJECT_DIR$/Source/Ninja/NinjaCharacterBase.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/WeaponSystem/WeaponBase.cpp" />
       <option value="$PROJECT_DIR$/Source/Ninja/WeaponSystem/Components/ProjectileShootingComponent.cpp" />
+      <option value="$PROJECT_DIR$/Source/Ninja/InteractionInterface.h" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mqxhMZggXVLqcwa6U1Bn96x9PL" />

@@ -12650,6 +12650,25 @@
         </e>
       </e>
     </e>
+    <e p="C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Marketplace\DiscordMessenger" t="Include">
+      <e p="DiscordMessenger.uplugin" t="Include" />
+      <e p="Resources" t="Include">
+        <e p="Icon128.png" t="Include" />
+      </e>
+      <e p="Source" t="Include">
+        <e p="DiscordMessenger" t="Include">
+          <e p="DiscordMessenger.Build.cs" t="Include" />
+          <e p="Private" t="Include">
+            <e p="DiscordMessenger.cpp" t="Include" />
+            <e p="DiscordMessengerBPLibrary.cpp" t="Include" />
+          </e>
+          <e p="Public" t="Include">
+            <e p="DiscordMessenger.h" t="Include" />
+            <e p="DiscordMessengerBPLibrary.h" t="Include" />
+          </e>
+        </e>
+      </e>
+    </e>
     <e p="C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Marketplace\EasyJsonParser" t="Include">
       <e p="EasyJsonParser.uplugin" t="Include" />
       <e p="Resources" t="Include">
@@ -12762,6 +12781,36 @@
             <e p="EasyXMLParseManager.h" t="Include" />
             <e p="EasyXMLParser.h" t="Include" />
             <e p="EasyXMLParserEnums.h" t="Include" />
+          </e>
+        </e>
+      </e>
+    </e>
+    <e p="C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Marketplace\FootIK" t="Include">
+      <e p="FootIK.uplugin" t="Include" />
+      <e p="Resources" t="Include">
+        <e p="Icon128.png" t="Include" />
+      </e>
+      <e p="Source" t="Include">
+        <e p="FootIK" t="Include">
+          <e p="FootIK.Build.cs" t="Include" />
+          <e p="Private" t="Include">
+            <e p="AnimNode_FootIK.cpp" t="Include" />
+            <e p="FootIK.cpp" t="Include" />
+          </e>
+          <e p="Public" t="Include">
+            <e p="AnimNode_FootIK.h" t="Include" />
+            <e p="FootIK.h" t="Include" />
+          </e>
+        </e>
+        <e p="FootIKEditor" t="Include">
+          <e p="FootIKEditor.Build.cs" t="Include" />
+          <e p="Private" t="Include">
+            <e p="AnimGraphNode_FootIK.cpp" t="Include" />
+            <e p="FootIKEditor.cpp" t="Include" />
+          </e>
+          <e p="Public" t="Include">
+            <e p="AnimGraphNode_FootIK.h" t="Include" />
+            <e p="FootIKEditor.h" t="Include" />
           </e>
         </e>
       </e>
@@ -50412,6 +50461,7 @@
         <e p="DefaultInput.ini" t="Include" />
       </e>
       <e p="Engine" t="Include" />
+      <e p="FootstepsSoundV2.png" t="Include" />
       <e p="Games" t="Include" />
       <e p="Intermediate\Build\Unused" t="ExcludeRecursive" />
       <e p="Intermediate\ProjectFiles" t="IncludeRecursive">
@@ -50445,6 +50495,8 @@
             <e p="EnemyCharacterBase.cpp" t="Include" />
             <e p="EnemyCharacterBase.h" t="Include" />
           </e>
+          <e p="InteractionInterface.cpp" t="Include" />
+          <e p="InteractionInterface.h" t="Include" />
           <e p="Ninja.Build.cs" t="Include" />
           <e p="Ninja.cpp" t="Include" />
           <e p="Ninja.h" t="Include" />
